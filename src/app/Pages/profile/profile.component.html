@@ -1,0 +1,109 @@
+<div class="flex justify-content-center">
+  <p-card>
+    <p-card>
+      <div class="flex justify justify-content-center">
+        <!-- Profile Picture -->
+        <div
+          class="profile-picture justify-content-center align-items-center mr-8"
+        >
+          <img
+            src="https://wallpapers.com/images/featured/cool-profile-picture-87h46gcobjl5e4xu.jpg"
+            alt="profile"
+            class="profile-img"
+            style="
+              width: 100px;
+              height: 100px;
+              border-radius: 50%;
+              object-fit: cover;
+            "
+          />
+        </div>
+        <!-- User Details -->
+        <div class="profile-details">
+          <h2>
+            {{ editUserForm.value.first_name }}
+            {{ editUserForm.value.last_name }}
+          </h2>
+          <h4>
+            <span>{{ editUserForm.value.email }}</span>
+          </h4>
+        </div>
+      </div>
+      <div class="flex justify justify-content-center">
+        <p-button
+          routerLink="/updatePassword"
+          label="Update Password"
+          [raised]="true"
+        ></p-button>
+      </div>
+    </p-card>
+    <p-card header="Edit your details here" class="m-1">
+      <form [formGroup]="editUserForm" (ngSubmit)="onSubmit()">
+        <div class="grid p-fluid">
+          <div class="field col-12 md:col-6">
+            <label for="first_name">First Name</label>
+            <input
+              type="text"
+              pInputText
+              formControlName="first_name"
+              placeholder="Type your first name"
+            />
+          </div>
+          <div class="field col-12 md:col-6">
+            <label for="last_name">Last Name</label>
+            <input
+              type="text"
+              pInputText
+              formControlName="last_name"
+              placeholder="Type your last name"
+            />
+          </div>
+
+          <div class="field col-12 md:col-6">
+            <label for="email">Email</label>
+            <input
+              type="text"
+              pInputText
+              formControlName="email"
+              placeholder="Type your email"
+            />
+          </div>
+
+          <div class="field col-12 md:col-6">
+            <label for="birthdate">Birthdate</label>
+            <input type="date" pInputText formControlName="birthdate" />
+          </div>
+
+          <div class="field col-12 md:col-6">
+            <label for="address">Address</label>
+            <textarea
+              pInputText
+              formControlName="address"
+              placeholder="Type your address"
+            ></textarea>
+          </div>
+          <div class="field col-12 md:col-6">
+            <label for="mobile">Mobile</label>
+            <input
+              type="text"
+              pInputText
+              formControlName="mobile"
+              placeholder="Type your mobile number"
+            />
+          </div>
+        </div>
+        <div
+          class="flex-container"
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+          "
+        >
+          <p-button label="Update Details" type="submit"></p-button>
+          <app-delete-confirmation></app-delete-confirmation>
+        </div>
+      </form>
+    </p-card>
+  </p-card>
+</div>

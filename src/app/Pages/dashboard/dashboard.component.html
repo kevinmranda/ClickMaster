@@ -1,0 +1,42 @@
+<div style="display: flex; flex-direction: column; min-height: 100vh">
+  <!-- Main Content -->
+  <p-card>
+    <ng-template pTemplate="header">
+      <app-scafold></app-scafold>
+    </ng-template>
+    <div style="display: flex; align-items: center">
+      <p-card class="col-4">
+        <i class="pi pi-camera" style="font-size: xx-large; margin-top: 0"></i>
+        <h4 class="mt-0">Total Photos</h4>
+        <p class="mb-0">345</p>
+      </p-card>
+      <p-card class="col-4">
+        <i
+          class="pi pi-shopping-cart"
+          style="font-size: xx-large; margin-top: 0"
+        ></i>
+        <h4 class="mt-0">Orders</h4>
+        <p class="mb-0">
+          Completed
+          <span [ngStyle]="{ color: 'var(--blue-500)' }">360</span>
+          Pending
+          <span [ngStyle]="{ color: 'var(--red-500)' }">360</span>
+        </p>
+      </p-card>
+      <p-card class="col-4">
+        <i
+          class="pi pi-money-bill"
+          style="font-size: xx-large; margin-top: 0"
+        ></i>
+        <h4 class="mt-0">Income</h4>
+        <p class="mb-0">
+          Tsh. <span [ngStyle]="{ color: 'var(--green-500)' }">70,000.00</span>
+        </p>
+      </p-card>
+    </div>
+    <!-- Footer -->
+    <!-- <app-footer
+      style="text-align: center; margin: bottom 0; background-color: #f8f9fa"
+    ></app-footer> -->
+  </p-card>
+</div>

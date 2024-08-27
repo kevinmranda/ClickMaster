@@ -1,0 +1,216 @@
+<div class="flex justify-content-center align-items-center h-full mt-8">
+  <form [formGroup]="registerForm" (ngSubmit)="submitDetails()">
+    <p-card header="Register" [style]="{ width: '500px' }">
+      <div class="grid p-fluid">
+        <!-- First row: First Name and Last Name -->
+        <div class="field col-12 md:col-6">
+          <label for="first_name">First Name</label>
+          <input
+            type="text"
+            pInputText
+            formControlName="first_name"
+            placeholder="Type your first name"
+          />
+          <small
+            *ngIf="
+              registerForm.get('first_name')?.invalid &&
+              (registerForm.get('first_name')?.dirty ||
+                registerForm.get('first_name')?.touched)
+            "
+            class="p-error"
+          >
+            <div *ngIf="registerForm.get('first_name')?.errors?.['required']">
+              First name is required
+            </div>
+          </small>
+        </div>
+        <div class="field col-12 md:col-6">
+          <label for="last_name">Last Name</label>
+          <input
+            type="text"
+            pInputText
+            formControlName="last_name"
+            placeholder="Type your last name"
+          />
+          <small
+            *ngIf="
+              registerForm.get('last_name')?.invalid &&
+              (registerForm.get('last_name')?.dirty ||
+                registerForm.get('last_name')?.touched)
+            "
+            class="p-error"
+          >
+            <div *ngIf="registerForm.get('last_name')?.errors?.['required']">
+              Last name is required
+            </div>
+          </small>
+        </div>
+
+        <!-- Second row: Email -->
+        <div class="field col-12">
+          <label for="email">Email</label>
+          <input
+            type="text"
+            pInputText
+            formControlName="email"
+            placeholder="Type your email"
+          />
+          <small
+            *ngIf="
+              registerForm.get('email')?.invalid &&
+              (registerForm.get('email')?.dirty ||
+                registerForm.get('email')?.touched)
+            "
+            class="p-error"
+          >
+            <div *ngIf="registerForm.get('email')?.errors?.['required']">
+              Email is required
+            </div>
+            <div *ngIf="registerForm.get('email')?.errors?.['email']">
+              Email should be valid
+            </div>
+          </small>
+        </div>
+
+        <!-- Third row: Password and Confirm Password -->
+        <div class="field col-12 md:col-6">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            pInputText
+            formControlName="password"
+            placeholder="Type your password"
+          />
+          <small
+            *ngIf="
+              registerForm.get('password')?.invalid &&
+              (registerForm.get('password')?.dirty ||
+                registerForm.get('password')?.touched)
+            "
+            class="p-error"
+          >
+            <div *ngIf="registerForm.get('password')?.errors?.['required']">
+              Password is required
+            </div>
+          </small>
+        </div>
+        <div class="field col-12 md:col-6">
+          <label for="confirmPassword">Confirm Password</label>
+          <input
+            type="password"
+            pInputText
+            formControlName="confirmPassword"
+            placeholder="Confirm Password"
+          />
+          <small
+            *ngIf="
+              registerForm.get('confirmPassword')?.invalid &&
+              (registerForm.get('confirmPassword')?.dirty ||
+                registerForm.get('confirmPassword')?.touched)
+            "
+            class="p-error"
+          >
+            <div
+              *ngIf="registerForm.get('confirmPassword')?.errors?.['required']"
+            >
+              Confirm the Password
+            </div>
+          </small>
+          <small
+            class="block p-error"
+            *ngIf="
+          registerForm.errors?.['passwordMismatch'] &&
+          registerForm.get('confirmPassword')?.valid &&
+          registerForm.get('password')?.valid"
+          >
+            Password do not match
+          </small>
+        </div>
+
+        <!-- Fourth row: Gender and Birthdate -->
+        <div class="field col-12 md:col-6">
+          <label for="gender">Gender</label>
+          <select pInputText formControlName="gender">
+            <option value="">Select your gender</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="other">Other</option>
+          </select>
+          <small
+            *ngIf="
+              registerForm.get('gender')?.invalid &&
+              (registerForm.get('gender')?.dirty ||
+                registerForm.get('gender')?.touched)
+            "
+            class="p-error"
+          >
+            <div *ngIf="registerForm.get('gender')?.errors?.['required']">
+              Gender is required
+            </div>
+          </small>
+        </div>
+        <div class="field col-12 md:col-6">
+          <label for="birthdate">Birthdate</label>
+          <input type="date" pInputText formControlName="birthdate" />
+          <small
+            *ngIf="
+              registerForm.get('birthdate')?.invalid &&
+              (registerForm.get('birthdate')?.dirty ||
+                registerForm.get('birthdate')?.touched)
+            "
+            class="p-error"
+          >
+            <div *ngIf="registerForm.get('birthdate')?.errors?.['required']">
+              Birthdate is required
+            </div>
+          </small>
+        </div>
+
+        <!-- Fifth row: Address and Mobile -->
+        <div class="field col-12 md:col-6">
+          <label for="address">Address</label>
+          <textarea
+            pInputText
+            formControlName="address"
+            placeholder="Type your address"
+          ></textarea>
+        </div>
+        <div class="field col-12 md:col-6">
+          <label for="mobile">Mobile</label>
+          <input
+            type="text"
+            pInputText
+            formControlName="mobile"
+            placeholder="Type your mobile number"
+          />
+          <small
+            *ngIf="
+              registerForm.get('mobile')?.invalid &&
+              (registerForm.get('mobile')?.dirty ||
+                registerForm.get('mobile')?.touched)
+            "
+            class="p-error"
+          >
+            <div *ngIf="registerForm.get('mobile')?.errors?.['required']">
+              Mobile number is required
+            </div>
+            <div *ngIf="registerForm.get('mobile')?.errors?.['pattern']">
+              Mobile number should be in the format +255xxxxxxxxx
+            </div>
+          </small>
+        </div>
+      </div>
+
+      <p-button
+        label="SIGN UP"
+        styleClass="w-full"
+        [disabled]="registerForm.invalid"
+        type="submit"
+      ></p-button>
+
+      <div class="mt-2">
+        Already a member? <a [routerLink]="['/login']">Login</a>
+      </div>
+    </p-card>
+  </form>
+</div>

@@ -95,12 +95,55 @@
               }
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.css",
+              {
+                "input": "src/themes/aura-dark-amber.css",
+                "bundleName": "aura-dark-amber",
+                "inject": false
+              },
+              {
+                "input": "src/themes/theme-saga-blue.css",
+                "bundleName": "saga-blue",
+                "inject": false
+              },
+              {
+                "input": "src/themes/theme-vela-blue.css",
+                "bundleName": "vela-blue",
+                "inject": false
+              },
+              {
+                "input": "src/themes/theme-arya-blue.css",
+                "bundleName": "arya-blue",
+                "inject": false
+              },
+              {
+                "input": "src/themes/theme-md-light-indigo.css",
+                "bundleName": "md-light-indigo",
+                "inject": false
+              },
+              {
+                "input": "src/themes/md-dark-indigo.css",
+                "bundleName": "md-dark-indigo",
+                "inject": false
+              },
+              {
+                "input": "src/themes/theme-bootstrap4-light-purple.css",
+                "bundleName": "bootstrap4-light-purple",
+                "inject": false
+              },
+              {
+                "input": "src/themes/theme-bootstrap4-dark-purple.css",
+                "bundleName": "bootstrap4-dark-purple",
+                "inject": false
+              }
             ],
             "scripts": []
           }
         }
       }
     }
+  },
+  "cli": {
+    "analytics": false
   }
 }

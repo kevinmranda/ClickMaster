@@ -1,0 +1,23 @@
+<p-menubar>
+  <ng-template pTemplate="start">
+    <span style="margin-left: 20px">ClickMaster</span>
+  </ng-template>
+
+  <ng-template pTemplate="end">
+    <div class="flex align-items-center gap-4">
+      <span>{{ username }}</span>
+      <p-button
+        icon="pi pi-user"
+        [rounded]="true"
+        severity="info"
+        routerLink="/profile"
+      />
+      <p-button
+        icon="pi pi-sign-out"
+        [rounded]="true"
+        severity="info"
+        routerLink="/login"
+      />
+    </div>
+  </ng-template>
+</p-menubar>

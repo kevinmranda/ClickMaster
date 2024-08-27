@@ -1,0 +1,10 @@
+.settings-container {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.settings-section {
+  margin-bottom: 20px;
+}

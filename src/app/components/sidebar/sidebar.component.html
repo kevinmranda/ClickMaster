@@ -1,0 +1,127 @@
+<p-sidebar #sidebarRef [(visible)]="sidebarVisible">
+  <ng-template pTemplate="headless">
+    <div class="flex flex-column h-full">
+      <div
+        class="flex align-items-center justify-content-between px-4 pt-3 flex-shrink-0"
+      >
+        <span class="inline-flex align-items-center gap-2">
+          <span class="font-semibold text-2xl text-primary">ClickMaster</span>
+        </span>
+        <span>
+          <p-button
+            type="button"
+            (onClick)="closeCallback($event)"
+            icon="pi pi-times"
+            rounded="true"
+            outlined="true"
+            styleClass="h-2rem w-2rem"
+          ></p-button>
+        </span>
+      </div>
+      <div class="overflow-y-auto">
+        <ul class="list-none p-3 m-0">
+          <li>
+            <div
+              pRipple
+              pStyleClass="@next"
+              enterClass="hidden"
+              enterActiveClass="slidedown"
+              leaveToClass="hidden"
+              leaveActiveClass="slideup"
+              class="p-3 flex align-items-center justify-content-between text-600 cursor-pointer p-ripple"
+            >
+              <span class="font-medium">NAVIGATION</span>
+              <i class="pi pi-chevron-down"></i>
+            </div>
+            <ul class="list-none p-0 m-0 overflow-hidden">
+              <li>
+                <a
+                  pRipple
+                  class="flex align-items-center cursor-pointer p-3 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple"
+                  routerLink="/dashboard"
+                  style="text-decoration: none"
+                >
+                  <i class="pi pi-home mr-2"></i>
+                  <span class="font-medium">Dashboard</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  pRipple
+                  class="flex align-items-center cursor-pointer p-3 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple"
+                  routerLink="/photos"
+                  style="text-decoration: none"
+                >
+                  <i class="pi pi-camera mr-2"></i>
+                  <span class="font-medium">Photos</span>
+                </a>
+              </li>
+
+              <li>
+                <a
+                  pRipple
+                  class="flex align-items-center cursor-pointer p-3 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple"
+                >
+                  <i class="pi pi-shopping-cart mr-2"></i>
+                  <span class="font-medium">Orders</span>
+                  <span
+                    class="inline-flex align-items-center justify-content-center ml-auto bg-primary border-circle"
+                    style="min-width: 1.5rem; height: 1.5rem"
+                    >3</span
+                  >
+                </a>
+              </li>
+              <li>
+                <a
+                  pRipple
+                  class="flex align-items-center cursor-pointer p-3 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple"
+                >
+                  <i class="pi pi-money-bill mr-2"></i>
+                  <span class="font-medium">Payments</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  pRipple
+                  class="flex align-items-center cursor-pointer p-3 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple"
+                  routerLink="/logs"
+                  style="text-decoration: none"
+                >
+                  <i class="pi pi-cog mr-2"></i>
+                  <span class="font-medium">Activity Logs</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  pRipple
+                  class="flex align-items-center cursor-pointer p-3 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple"
+                  routerLink="/settings"
+                  style="text-decoration: none"
+                >
+                  <i class="pi pi-cog mr-2"></i>
+                  <span class="font-medium">Settings</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <div class="mt-auto">
+        <hr class="mb-3 mx-3 border-top-1 border-none surface-border" />
+        <a
+          pRipple
+          class="m-3 flex align-items-center cursor-pointer p-3 gap-2 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple"
+          routerLink="../profile"
+          style="text-decoration: none"
+        >
+          <p-avatar
+            image="https://wallpapers.com/images/featured/cool-profile-picture-87h46gcobjl5e4xu.jpg"
+            shape="circle"
+          />
+          <span class="font-bold">{{ username }}</span>
+        </a>
+      </div>
+    </div>
+  </ng-template>
+</p-sidebar>
+<p-button (onClick)="sidebarVisible = true" icon="pi pi-bars"></p-button>

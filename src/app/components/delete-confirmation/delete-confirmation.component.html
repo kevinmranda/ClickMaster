@@ -1,0 +1,43 @@
+<p-toast
+  position="center"
+  key="confirm"
+  (onClose)="onClose()"
+  [baseZIndex]="5000"
+>
+  <ng-template let-message pTemplate="headless" let-closeFn="closeFn">
+    <section
+      class="flex justify-content-center align-items-center p-3 gap-3 w-full bg-black-alpha-90 shadow-2"
+      style="border-radius: 10px"
+    >
+      <i class="pi pi-trash text-red-500 text-2xl"></i>
+      <div
+        class="flex flex-column gap-3 justify-content-center align-items-center w-full"
+      >
+        <p class="font-semibold text-base text-white">
+          {{ message.summary }}
+        </p>
+        <p class="m-0 text-base text-700">{{ message.detail }}</p>
+        <div class="flex gap-3 mb-3">
+          <p-button
+            label="Confirm"
+            [text]="true"
+            styleClass="p-0 text-red-500"
+            (onClick)="deleteAccount()"
+          />
+          <p-button
+            label="Cancel"
+            [text]="true"
+            styleClass="text-white p-0"
+            (onClick)="closeFn($event)"
+          />
+        </div>
+      </div>
+    </section>
+  </ng-template>
+</p-toast>
+<p-button
+  label="Delete Account"
+  (onClick)="showConfirm()"
+  severity="danger"
+  [text]="true"
+/>

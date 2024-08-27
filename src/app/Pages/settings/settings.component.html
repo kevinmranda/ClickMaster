@@ -1,0 +1,38 @@
+<app-scafold></app-scafold>
+
+<div class="settings-container">
+  <!-- Notification Settings Section -->
+  <p-card header="Notification Settings" class="settings-section">
+    <p-checkbox
+      label="Receive notifications through email"
+      [(ngModel)]="receiveNotifications"
+    />
+  </p-card>
+
+  <!-- Theme Settings Section -->
+  <p-card header="Theme Settings" class="settings-section">
+    <p-dropdown
+      [options]="groupedThemes"
+      [(ngModel)]="selectedTheme"
+      placeholder="Select a Theme"
+      [group]="true"
+      (onChange)="changeTheme($event.value)"
+    >
+      <ng-template let-group pTemplate="group">
+        <div class="flex align-items-center">
+          <span>{{ group.label }}</span>
+        </div>
+      </ng-template>
+    </p-dropdown>
+  </p-card>
+
+  <!-- Language Settings Section -->
+  <p-card header="Language Settings" class="settings-section">
+    <p-dropdown
+      [options]="languages"
+      [(ngModel)]="selectedLanguage"
+      placeholder="Select a Language"
+      (onChange)="changeLanguage($event.value)"
+    ></p-dropdown>
+  </p-card>
+</div>
