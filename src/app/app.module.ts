@@ -36,6 +36,13 @@ import { ActivityLoggingComponent } from './Pages/activity-logging/activity-logg
 import { SettingsComponent } from './Pages/settings/settings.component';
 import { DropdownModule } from 'primeng/dropdown';
 import { CheckboxModule } from 'primeng/checkbox';
+import { OrdersComponent } from './Pages/orders/orders.component';
+import { PaymentsComponent } from './Pages/payments/payments.component';
+import { TagModule } from 'primeng/tag';
+import { GalleryComponent } from './components/gallery/gallery.component';
+import { DialogModule } from 'primeng/dialog';
+import { FileUploadModule } from 'primeng/fileupload';
+import { FileUploadComponent } from './components/file-upload/file-upload.component';
 
 @NgModule({
   declarations: [
@@ -56,6 +63,10 @@ import { CheckboxModule } from 'primeng/checkbox';
     ResetPasswordComponent,
     ActivityLoggingComponent,
     SettingsComponent,
+    OrdersComponent,
+    PaymentsComponent,
+    GalleryComponent,
+    FileUploadComponent,
   ],
   imports: [
     BrowserModule,
@@ -69,6 +80,7 @@ import { CheckboxModule } from 'primeng/checkbox';
     MenubarModule,
     SidebarModule,
     TableModule,
+    FileUploadModule,
     AvatarModule,
     RippleModule,
     StyleClassModule,
@@ -76,6 +88,8 @@ import { CheckboxModule } from 'primeng/checkbox';
     FormsModule,
     DropdownModule,
     CheckboxModule,
+    TagModule,
+    DialogModule,
   ],
   providers: [MessageService, provideHttpClient()],
   bootstrap: [AppComponent],

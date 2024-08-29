@@ -4,9 +4,12 @@
   <!-- Notification Settings Section -->
   <p-card header="Notification Settings" class="settings-section">
     <p-checkbox
+      name="notifications"
+      [binary]="true"
       label="Receive notifications through email"
       [(ngModel)]="receiveNotifications"
-    />
+      (ngModelChange)="notifications($event)"
+    ></p-checkbox>
   </p-card>
 
   <!-- Theme Settings Section -->

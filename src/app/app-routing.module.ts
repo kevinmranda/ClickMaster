@@ -10,6 +10,9 @@ import { PhotosComponent } from './Pages/photos/photos.component';
 import { ResetPasswordComponent } from './Pages/Auth/reset-password/reset-password.component';
 import { ActivityLoggingComponent } from './Pages/activity-logging/activity-logging.component';
 import { SettingsComponent } from './Pages/settings/settings.component';
+import { OrdersComponent } from './Pages/orders/orders.component';
+import { PaymentsComponent } from './Pages/payments/payments.component';
+import { LandingComponent } from './Pages/landing/landing.component';
 
 const routes: Routes = [
   {
@@ -33,6 +36,14 @@ const routes: Routes = [
     component: PhotosComponent,
   },
   {
+    path: 'orders',
+    component: OrdersComponent,
+  },
+  {
+    path: 'payments',
+    component: PaymentsComponent,
+  },
+  {
     path: 'dashboard',
     component: DashboardComponent,
     // canActivate: [authGuard],
@@ -54,8 +65,12 @@ const routes: Routes = [
     component: SettingsComponent,
   },
   {
+    path: 'home',
+    component: LandingComponent,
+  },
+  {
     path: '',
-    redirectTo: 'login',
+    redirectTo: 'home',
     pathMatch: 'full',
   },
 ];

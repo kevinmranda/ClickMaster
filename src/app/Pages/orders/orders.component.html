@@ -1,0 +1,41 @@
+<app-scafold></app-scafold>
+<p-table
+  [value]="orders"
+  [paginator]="true"
+  [rows]="5"
+  [tableStyle]="{ 'min-width': '50rem' }"
+  [rowsPerPageOptions]="[5, 10, 20]"
+>
+  <ng-template pTemplate="header">
+    <tr>
+      <th style="width: 15%; text-align: center">ID</th>
+      <th style="width: 15%; text-align: center">Created At</th>
+      <th style="width: 15%; text-align: center">Customer Email</th>
+      <th style="width: 15%; text-align: center">Photos</th>
+      <th style="width: 15%; text-align: center">Total Amount</th>
+      <th style="width: 15%; text-align: center">Payment Status</th>
+      <th style="width: 15%; text-align: center">Order Status</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-order>
+    <tr>
+      <p *ngIf="orders.length < 0">No orders yet</p>
+      <td style="text-align: center">{{ order.ID }}</td>
+      <td style="text-align: center">
+        {{ order.CreatedAt | date : "dd/MM/yyyy" }}
+      </td>
+      <td style="text-align: center">{{ order.Customer_email }}</td>
+      <td style="text-align: center">{{ order.Photos.length }}</td>
+      <td style="text-align: center">{{ order.Total_amount }}</td>
+      <td style="text-align: center">
+        <p-tag
+          [value]="order.Payment.Status"
+          [severity]="getSeverity(order.Payment.Status)"
+        />
+      </td>
+      <td style="text-align: center">
+        <i class="pi" [ngClass]="getClass(order.Status)"></i>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>

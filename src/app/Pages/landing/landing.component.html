@@ -1,1 +1,13 @@
-<p>landing works!</p>
+<p-menubar>
+  <ng-template pTemplate="start">
+    <span class="m-4">ClickMaster</span>
+  </ng-template>
+  <ng-template pTemplate="end">
+    <span class="m-4">Welcome</span>
+  </ng-template>
+</p-menubar>
+<p class="m-3">
+  Welcome to ClickMaster feel free to go through the photos and place an order
+  for Picha Mbao
+</p>
+<app-gallery [galleryData]="data" [showCount]="true"></app-gallery>

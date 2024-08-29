@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ThemeService } from '../../theme.service';
 import { SelectItemGroup, SelectItem, MessageService } from 'primeng/api';
 import { AuthService } from '../../Services/Auth/auth.service';
@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
   templateUrl: './settings.component.html',
   styleUrls: ['./settings.component.css'],
 })
-export class SettingsComponent {
+export class SettingsComponent implements OnInit {
   receiveNotifications: boolean = false;
   groupedThemes: SelectItemGroup[];
   selectedTheme: string = 'aura-dark-amber.css';
@@ -50,23 +50,47 @@ export class SettingsComponent {
     ];
   }
 
+  ngOnInit() {
+    // Fetch the current preferences from the server or local storage
+    this.authService.getUserPreferences().subscribe(
+      (preferences: UserPreferences) => {
+        this.receiveNotifications = preferences.Subscription;
+        this.selectedTheme = preferences.Theme;
+        this.selectedLanguage = preferences.Language;
+      },
+      (error: HttpErrorResponse) => {
+        console.error('Failed to fetch user preferences:', error);
+      }
+    );
+  }
+
+  notifications(newValue: boolean) {
+    this.receiveNotifications = newValue;
+    // Perform any additional logic here
+    this.updatePreferences(newValue, undefined, undefined);
+  }
+
   changeTheme(theme: string) {
     if (theme && typeof theme === 'string') {
       this.themeService.switchTheme(theme);
-      this.updatePreferences(this.receiveNotifications, theme, undefined);
+      this.updatePreferences(undefined, theme, undefined);
     } else {
       console.error('Invalid theme selected:', theme);
     }
   }
 
   changeLanguage(language: string) {
-    this.updatePreferences(this.receiveNotifications, undefined, language);
+    if (language && typeof language === 'string') {
+      this.updatePreferences(undefined, undefined, language);
+    } else {
+      console.error('Invalid language selected:', language);
+    }
   }
 
   updatePreferences(subscription?: boolean, theme?: string, language?: string) {
-    // Start with existing preferences or defaults
+    // Start with the current preferences
     const preferences: UserPreferences = {
-      Subscription: this.receiveNotifications, // This holds the current preferences
+      Subscription: this.receiveNotifications,
       Theme: this.selectedTheme,
       Language: this.selectedLanguage,
     };
@@ -90,7 +114,6 @@ export class SettingsComponent {
           summary: 'Success',
           detail: 'Preferences Successfully Updated',
         });
-        this.router.navigate(['login']);
       },
       (error: HttpErrorResponse) => {
         console.log(error);

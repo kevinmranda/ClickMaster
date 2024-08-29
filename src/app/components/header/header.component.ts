@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { AuthService } from '../../Services/Auth/auth.service';
 import { User } from '../../interfaces/auth';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -11,7 +12,7 @@ import { User } from '../../interfaces/auth';
 export class HeaderComponent {
   username: string = '';
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
     this.loadUserDetails();
@@ -27,5 +28,10 @@ export class HeaderComponent {
         console.log('Error loading user details', error);
       }
     );
+  }
+
+  logout() {
+    this.authService.logout();
+    this.router.navigate(['login']);
   }
 }

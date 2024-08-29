@@ -19,7 +19,7 @@
   <ng-template pTemplate="body" let-log>
     <tr>
       <td>{{ log.ID }}</td>
-      <td>{{ log.CreatedAt }}</td>
+      <td>{{ log.CreatedAt | date : "dd/MM/yyyy" }}</td>
       <td>{{ log.Level }}</td>
       <td>{{ log.Message }}</td>
       <!-- <td>{{ log.Body }}</td> -->

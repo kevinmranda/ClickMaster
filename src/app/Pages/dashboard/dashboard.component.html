@@ -8,7 +8,7 @@
       <p-card class="col-4">
         <i class="pi pi-camera" style="font-size: xx-large; margin-top: 0"></i>
         <h4 class="mt-0">Total Photos</h4>
-        <p class="mb-0">345</p>
+        <p class="mb-0">{{ photos }}</p>
       </p-card>
       <p-card class="col-4">
         <i
@@ -18,9 +18,13 @@
         <h4 class="mt-0">Orders</h4>
         <p class="mb-0">
           Completed
-          <span [ngStyle]="{ color: 'var(--blue-500)' }">360</span>
+          <span [ngStyle]="{ color: 'var(--blue-500)' }">{{
+            completedOrders
+          }}</span>
           Pending
-          <span [ngStyle]="{ color: 'var(--red-500)' }">360</span>
+          <span [ngStyle]="{ color: 'var(--yellow-500)' }">{{
+            pendingOrders
+          }}</span>
         </p>
       </p-card>
       <p-card class="col-4">
@@ -30,7 +34,9 @@
         ></i>
         <h4 class="mt-0">Income</h4>
         <p class="mb-0">
-          Tsh. <span [ngStyle]="{ color: 'var(--green-500)' }">70,000.00</span>
+          <span [ngStyle]="{ color: 'var(--green-500)' }">{{
+            income | currency : "TZS" : "symbol" : "1.2-2"
+          }}</span>
         </p>
       </p-card>
     </div>

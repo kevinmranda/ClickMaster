@@ -17,7 +17,6 @@ import { LoginResponse } from '../../interfaces/auth';
 })
 export class AuthService {
   private baseUrl = 'http://localhost:3000';
-  private userID: number | null = null; // Store userID here
 
   constructor(private http: HttpClient) {}
 
@@ -31,46 +30,39 @@ export class AuthService {
       .pipe(
         tap((response) => {
           if (response && response.data && response.data.ID) {
-            this.userID = response.data.ID; // Store the user ID after login
+            localStorage.setItem('id', response.data.ID.toString());
+            localStorage.setItem('role', response.data.Role.toString());
+            localStorage.setItem('token', response.token.toString());
           }
         })
       );
   }
-
   getUsers(): Observable<any> {
     return this.http.get(`${this.baseUrl}/getUsers`);
   }
 
   getUser(): Observable<User> {
-    if (this.userID === null) {
-      throw new Error('User ID not set. Please login first.');
-    }
-    return this.http.get<User>(`${this.baseUrl}/getUser/${this.userID}`);
+    return this.http.get<User>(
+      `${this.baseUrl}/getUser/${localStorage.getItem('id')}`
+    );
   }
 
   updateUser(updatedData: User): Observable<any> {
-    if (this.userID === null) {
-      throw new Error('User ID not set. Please login first.');
-    }
     return this.http.put(
-      `${this.baseUrl}/updateUser/${this.userID}`,
+      `${this.baseUrl}/updateUser/${localStorage.getItem('id')}`,
       updatedData
     );
   }
 
   deleteUser() {
-    if (this.userID === null) {
-      throw new Error('User ID not set. Please login first.');
-    }
-    return this.http.delete<User>(`${this.baseUrl}/deleteUser/${this.userID}`);
+    return this.http.delete<User>(
+      `${this.baseUrl}/deleteUser/${localStorage.getItem('id')}`
+    );
   }
 
   updateUserPassword(updatedPassword: UpdatedPassword): Observable<any> {
-    if (this.userID === null) {
-      throw new Error('User ID not set. Please login first.');
-    }
     return this.http.put(
-      `${this.baseUrl}/updateUserPassword/${this.userID}`,
+      `${this.baseUrl}/updateUserPassword/${localStorage.getItem('id')}`,
       updatedPassword
     );
   }
@@ -90,12 +82,22 @@ export class AuthService {
   }
 
   updateUserPreferences(userPreferences: UserPreferences): Observable<any> {
-    if (this.userID === null) {
-      throw new Error('User ID not set. Please login first.');
-    }
-    return this.http.post(
-      `${this.baseUrl}/updateUserPreferences/${this.userID}`,
+    return this.http.put(
+      `${this.baseUrl}/updateUserPreferences/${localStorage.getItem('id')}`,
       userPreferences
     );
+  }
+
+  getUserPreferences(): Observable<UserPreferences> {
+    return this.http.get<UserPreferences>(
+      `${this.baseUrl}/userPreferences/${localStorage.getItem('id')}`
+    );
+  }
+
+  logout() {
+    localStorage.removeItem('id');
+    localStorage.removeItem('role');
+    localStorage.removeItem('token');
+    localStorage.clear();
   }
 }
