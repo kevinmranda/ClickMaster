@@ -41,6 +41,7 @@ export class GalleryComponent implements OnChanges {
   currentIndex = 0;
   controls = true;
   totalImageCount = 0;
+  checked: boolean = false;
 
   getPhotoUrl(text: string) {
     return `http://localhost:3000/getPhoto/${text}`;

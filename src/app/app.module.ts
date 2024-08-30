@@ -43,6 +43,8 @@ import { GalleryComponent } from './components/gallery/gallery.component';
 import { DialogModule } from 'primeng/dialog';
 import { FileUploadModule } from 'primeng/fileupload';
 import { FileUploadComponent } from './components/file-upload/file-upload.component';
+import { DividerModule } from 'primeng/divider';
+import { PhotoCartComponent } from './components/photo-cart/photo-cart.component';
 
 @NgModule({
   declarations: [
@@ -67,6 +69,7 @@ import { FileUploadComponent } from './components/file-upload/file-upload.compon
     PaymentsComponent,
     GalleryComponent,
     FileUploadComponent,
+    PhotoCartComponent,
   ],
   imports: [
     BrowserModule,
@@ -90,6 +93,7 @@ import { FileUploadComponent } from './components/file-upload/file-upload.compon
     CheckboxModule,
     TagModule,
     DialogModule,
+    DividerModule,
   ],
   providers: [MessageService, provideHttpClient()],
   bootstrap: [AppComponent],

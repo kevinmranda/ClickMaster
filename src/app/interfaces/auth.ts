@@ -58,3 +58,18 @@ export interface UpdatedPassword {
 export interface UpdtdPassword {
   Password: string;
 }
+
+export interface customerEmail {
+  customer_email: string;
+}
+
+export interface CustResponse {
+  customer: {
+    ID: number;
+    CreatedAt: string;
+    UpdatedAt: string;
+    DeletedAt: string | null;
+    CustomerEmail: string;
+  };
+  message: string;
+}
