@@ -126,8 +126,8 @@
     </div>
   </ng-template>
   <ng-template pTemplate="body">
-    <p-table [value]="photos">
-      <ng-template pTemplate="body" let-photo>
+    <p-table [value]="cartItems">
+      <ng-template pTemplate="body" let-cartItem>
         <tr>
           <td>
             <div
@@ -138,16 +138,18 @@
                   <img
                     class="border-round"
                     style="width: 70px; height: 70px; object-fit: cover"
-                    src="http://localhost:3000/getPhoto/{{ photo.img }}"
-                    alt="{{ photo.img }}"
+                    src="http://localhost:3000/getPhoto/{{ cartItem.Filename }}"
+                    alt="{{ cartItem.Title }}"
                   />
                 </div>
                 <p-divider layout="vertical" />
                 <div style="flex-grow: 1">
-                  <p style="margin: 0; font-weight: bold">{{ photo.title }}</p>
+                  <p style="margin: 0; font-weight: bold">
+                    {{ cartItem.Title }}
+                  </p>
                   <p-divider />
                   <p style="margin: 0; color: gray">
-                    {{ photo.price | currency : "TZS" }}
+                    {{ cartItem.Price | currency : "TZS" }}
                   </p>
                 </div>
                 <p-divider layout="vertical" />
@@ -157,6 +159,7 @@
                     [rounded]="true"
                     severity="danger"
                     [text]="true"
+                    (click)="removeItem(cartItem.ID)"
                   ></p-button>
                 </div>
               </div>
@@ -170,6 +173,6 @@
     <p>
       Total Cost: <span>{{ total | currency : "TZS" }}</span>
     </p>
-    <p-button label="Checkout" icon="pi pi-check" />
+    <p-button label="Checkout" icon="pi pi-check" (onClick)="checkout()" />
   </ng-template>
 </p-dialog>

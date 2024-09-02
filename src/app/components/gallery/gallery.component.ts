@@ -7,6 +7,7 @@ import {
 } from '@angular/animations';
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { Photos } from '../../Pages/photos/photos';
+import { CartService } from '../../Services/Pages/Landing/cart.service';
 
 @Component({
   selector: 'app-gallery',
@@ -42,6 +43,20 @@ export class GalleryComponent implements OnChanges {
   controls = true;
   totalImageCount = 0;
   checked: boolean = false;
+
+  constructor(private cartService: CartService) {}
+
+  addToCart(photo: any) {
+    this.cartService.addToCart(photo);
+  }
+
+  onCheckboxChange(event: any, photo: any) {
+    if (event.target.checked) {
+      this.addToCart(photo);
+    } else {
+      this.cartService.removeFromCart(photo.ID);
+    }
+  }
 
   getPhotoUrl(text: string) {
     return `http://localhost:3000/getPhoto/${text}`;

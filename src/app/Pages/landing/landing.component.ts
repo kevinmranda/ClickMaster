@@ -8,12 +8,8 @@ import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { customerEmail } from '../../interfaces/auth';
 import { CartService } from '../../Services/Pages/Landing/cart.service';
-import { Cart } from '../../interfaces/cart';
-interface cartData {
-  img: string;
-  title: string;
-  price: number;
-}
+import { Subscription } from 'rxjs';
+
 @Component({
   selector: 'app-landing',
   templateUrl: './landing.component.html',
@@ -25,34 +21,17 @@ export class LandingComponent implements OnInit {
   preview = false;
   show = false;
   join = false;
+  cartItems: any[] = [];
   data: Photos[] = [];
-  photos: cartData[] = [
-    {
-      img: '51241.jpg',
-      title: 'Image',
-      price: 25000,
-    },
-    {
-      img: 'Frog.jpg',
-      title: 'Image2',
-      price: 25000,
-    },
-    {
-      img: 'Sand.jpg',
-      title: 'Image3',
-      price: 25000,
-    },
-  ];
-
-  badgeValue = this.photos.length;
-  total: number = 0;
+  private cartSubscription!: Subscription;
+  badgeValue = 0;
+  total = 0;
 
   constructor(
     private photosService: PhotosService,
     private landingService: LandingService,
     private fb: FormBuilder,
     private messageService: MessageService,
-    private router: Router,
     private cartService: CartService
   ) {
     this.customerSignInForm = this.fb.group({
@@ -61,6 +40,7 @@ export class LandingComponent implements OnInit {
     this.customerJoinForm = this.fb.group({
       customer_join_email: ['', [Validators.required, Validators.email]],
     });
+    this.cartService.cartItems$.subscribe((items) => (this.cartItems = items));
   }
   get email() {
     return this.customerSignInForm.controls['customer_email'];
@@ -71,8 +51,11 @@ export class LandingComponent implements OnInit {
 
   ngOnInit() {
     this.getPhotos();
-    this.calculateTotal();
     this.showSign();
+    this.cartSubscription = this.cartService.cartItems$.subscribe((items) => {
+      this.badgeValue = this.cartItems.length;
+      this.calculateTotal();
+    });
   }
 
   getPhotos() {
@@ -92,68 +75,24 @@ export class LandingComponent implements OnInit {
   }
 
   calculateTotal() {
-    this.total = this.photos.reduce((sum, photo) => sum + photo.price, 0);
-  }
-
-  addItem(item: Cart) {
-    this.cartService.addItems(item).subscribe(
-      (response) => {
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Success',
-          detail: 'Item Added',
-        });
-        console.log(response);
-      },
-      (error: HttpErrorResponse) => {
-        console.log(error);
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Error',
-          detail: error.error.error,
-        });
-      }
+    this.total = this.cartItems.reduce(
+      (sum, cartItem) => sum + cartItem.Price,
+      0
     );
   }
 
-  removeItem(photo_id: number) {
-    this.cartService.removeItem(photo_id).subscribe(
-      () => {
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Success',
-          detail: 'Item Removed',
-        });
-      },
-      (error: HttpErrorResponse) => {
-        console.log(error);
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Error',
-          detail: error.error.error,
-        });
-      }
-    );
+  removeItem(photoId: number) {
+    this.cartService.removeFromCart(photoId);
   }
 
   clearCart() {
-    this.cartService.clearCart().subscribe(
-      () => {
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Success',
-          detail: 'Cart Cleared',
-        });
-      },
-      (error: HttpErrorResponse) => {
-        console.log(error);
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Error',
-          detail: error.error.error,
-        });
-      }
-    );
+    this.cartService.clearCart();
+    this.preview = false;
+  }
+
+  checkout() {
+    this.cartService.clearCart();
+    this.preview = false;
   }
 
   customerSignIn() {

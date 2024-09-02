@@ -9,7 +9,9 @@
         type="checkbox"
         class="gallery-checkbox"
         style="position: absolute; top: 10px; right: 10px; z-index: 1"
+        (change)="onCheckboxChange($event, data)"
       />
+
       <img
         (click)="onPreviewImage(i)"
         [src]="getPhotoUrl(data.Filename)"
