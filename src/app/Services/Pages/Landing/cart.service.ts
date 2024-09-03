@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CartService {
-  private cartItems = new BehaviorSubject<any[]>([]);
+  cartItems = new BehaviorSubject<any[]>([]);
   cartItems$ = this.cartItems.asObservable();
 
   addToCart(photo: any) {
@@ -23,6 +23,10 @@ export class CartService {
 
   clearCart() {
     this.cartItems.next([]);
+  }
+
+  getMappedCartItems() {
+    return this.cartItems$.pipe(map((items) => items.map((item) => item.ID)));
   }
 
   getCartItems() {

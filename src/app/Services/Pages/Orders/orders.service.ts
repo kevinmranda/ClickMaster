@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Orders } from '../../../interfaces/orders';
-import { map, Observable } from 'rxjs';
+import { Order, OrderResponse, Orders } from '../../../interfaces/orders';
+import { map, Observable, tap } from 'rxjs';
+import { CartService } from '../Landing/cart.service';
 
 @Injectable({
   providedIn: 'root',
@@ -9,7 +10,7 @@ import { map, Observable } from 'rxjs';
 export class OrdersService {
   private baseUrl = 'http://localhost:3000';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private cartService: CartService) {}
 
   getOrders(): Observable<Orders[]> {
     return this.http
@@ -18,6 +19,20 @@ export class OrdersService {
       )
       .pipe(
         map((response) => response.data) // Map to extract the data array
+      );
+  }
+
+  submitOrder(order: Order): Observable<OrderResponse> {
+    return this.http
+      .post<OrderResponse>(`${this.baseUrl}/addOrder/`, order)
+      .pipe(
+        tap((response) => {
+          if (response && response.order) {
+            localStorage.setItem('orderID', response.order.ID.toString());
+          } else {
+            console.error('Order is missing in the response.');
+          }
+        })
       );
   }
 }

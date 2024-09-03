@@ -6,3 +6,10 @@
   height: 100vh;
 }
 /*  */
+
+.provider-img {
+  width: 100px;
+  height: 80px;
+  object-fit: contain;
+  cursor: pointer;
+}

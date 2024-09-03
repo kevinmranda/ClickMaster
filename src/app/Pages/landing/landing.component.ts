@@ -9,6 +9,11 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { customerEmail } from '../../interfaces/auth';
 import { CartService } from '../../Services/Pages/Landing/cart.service';
 import { Subscription } from 'rxjs';
+import { Order } from '../../interfaces/orders';
+import { OrdersService } from '../../Services/Pages/Orders/orders.service';
+import { PaymentsService } from '../../Services/Pages/Payments/payments.service';
+import { Payment } from '../../interfaces/payments';
+import { withHttpTransferCacheOptions } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-landing',
@@ -18,6 +23,8 @@ import { Subscription } from 'rxjs';
 export class LandingComponent implements OnInit {
   customerSignInForm: FormGroup;
   customerJoinForm: FormGroup;
+  customerPayForm: FormGroup;
+  payForm = false;
   preview = false;
   show = false;
   join = false;
@@ -26,13 +33,19 @@ export class LandingComponent implements OnInit {
   private cartSubscription!: Subscription;
   badgeValue = 0;
   total = 0;
+  mappedCartItems: number[] = [];
+  paymentInfo!: Payment;
+  providersDialog = false;
+  MNOProvider!: string;
 
   constructor(
     private photosService: PhotosService,
     private landingService: LandingService,
     private fb: FormBuilder,
     private messageService: MessageService,
-    private cartService: CartService
+    private cartService: CartService,
+    private orderService: OrdersService,
+    private paymentService: PaymentsService
   ) {
     this.customerSignInForm = this.fb.group({
       customer_email: ['', [Validators.required, Validators.email]],
@@ -41,6 +54,12 @@ export class LandingComponent implements OnInit {
       customer_join_email: ['', [Validators.required, Validators.email]],
     });
     this.cartService.cartItems$.subscribe((items) => (this.cartItems = items));
+    this.customerPayForm = this.fb.group({
+      phone: [
+        '',
+        [Validators.required, Validators.pattern(/^(?:\+255|255)?[0-9]{10}$/)],
+      ],
+    });
   }
   get email() {
     return this.customerSignInForm.controls['customer_email'];
@@ -55,6 +74,10 @@ export class LandingComponent implements OnInit {
     this.cartSubscription = this.cartService.cartItems$.subscribe((items) => {
       this.badgeValue = this.cartItems.length;
       this.calculateTotal();
+    });
+    this.cartService.getMappedCartItems().subscribe((ids) => {
+      this.mappedCartItems = ids;
+      console.log(this.mappedCartItems);
     });
   }
 
@@ -91,8 +114,72 @@ export class LandingComponent implements OnInit {
   }
 
   checkout() {
+    const order: Order = {
+      Customer_email: localStorage.getItem('customerEmail')?.toString() || '',
+      Photo_ids: this.mappedCartItems,
+    };
+
+    this.orderService.submitOrder(order).subscribe(
+      () => {
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Success',
+          detail: 'Order sent',
+        });
+      },
+      (error: HttpErrorResponse) => {
+        console.log(error);
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: error.error.error,
+        });
+      }
+    );
+    localStorage.setItem('total', this.total.toString());
     this.cartService.clearCart();
     this.preview = false;
+    this.providersDialog = true;
+  }
+
+  provider(provider: string) {
+    this.MNOProvider = provider;
+    this.payForm = true;
+    this.providersDialog = false;
+  }
+
+  pay() {
+    const orderIDstr = localStorage.getItem('orderID');
+    const orderID = orderIDstr ? parseInt(orderIDstr, 10) || 0 : 0;
+    const totalStr = localStorage.getItem('total');
+    const totalInt = totalStr ? parseInt(totalStr, 10) || 0 : 0;
+    if (this.customerPayForm.valid) {
+      const phoneNumber = this.customerPayForm.get('phone')?.value;
+      this.paymentInfo = {
+        OrderID: orderID,
+        Amount: totalInt,
+        AccountNumber: phoneNumber,
+        Provider: this.MNOProvider,
+      };
+      this.paymentService.pay(this.paymentInfo).subscribe(
+        () => {
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Success',
+            detail: 'Order Paid Successfully',
+          });
+        },
+        (error: HttpErrorResponse) => {
+          console.log(error);
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: error.error.error,
+          });
+        }
+      );
+      this.payForm = false;
+    }
   }
 
   customerSignIn() {

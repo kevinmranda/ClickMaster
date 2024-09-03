@@ -9,3 +9,10 @@ export interface Payments {
   Payment_method: string;
   Transaction_id: string;
 }
+
+export interface Payment {
+  OrderID: number;
+  Amount: number;
+  AccountNumber: string;
+  Provider: string;
+}

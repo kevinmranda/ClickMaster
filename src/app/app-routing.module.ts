@@ -13,6 +13,7 @@ import { SettingsComponent } from './Pages/settings/settings.component';
 import { OrdersComponent } from './Pages/orders/orders.component';
 import { PaymentsComponent } from './Pages/payments/payments.component';
 import { LandingComponent } from './Pages/landing/landing.component';
+import { authGuard } from './guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -26,6 +27,7 @@ const routes: Routes = [
   {
     path: 'updatePassword',
     component: UpdatePasswordComponent,
+    canActivate: [authGuard],
   },
   {
     path: 'forgotPassword',
@@ -34,23 +36,27 @@ const routes: Routes = [
   {
     path: 'photos',
     component: PhotosComponent,
+    canActivate: [authGuard],
   },
   {
     path: 'orders',
     component: OrdersComponent,
+    canActivate: [authGuard],
   },
   {
     path: 'payments',
     component: PaymentsComponent,
+    canActivate: [authGuard],
   },
   {
     path: 'dashboard',
     component: DashboardComponent,
-    // canActivate: [authGuard],
+    canActivate: [authGuard],
   },
   {
     path: 'profile',
     component: ProfileComponent,
+    canActivate: [authGuard],
   },
   {
     path: 'resetPassword',
@@ -59,10 +65,12 @@ const routes: Routes = [
   {
     path: 'logs',
     component: ActivityLoggingComponent,
+    canActivate: [authGuard],
   },
   {
     path: 'settings',
     component: SettingsComponent,
+    canActivate: [authGuard],
   },
   {
     path: 'home',

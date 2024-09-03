@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Payments } from '../../../interfaces/payments';
+import { Payment, Payments } from '../../../interfaces/payments';
 import { map, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
@@ -19,5 +19,9 @@ export class PaymentsService {
       .pipe(
         map((response) => response.data) // Map to extract the data array
       );
+  }
+
+  pay(paymentInfo: Payment) {
+    return this.http.post(`${this.baseUrl}/payOrder`, paymentInfo);
   }
 }

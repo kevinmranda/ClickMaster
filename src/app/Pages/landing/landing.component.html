@@ -176,3 +176,87 @@
     <p-button label="Checkout" icon="pi pi-check" (onClick)="checkout()" />
   </ng-template>
 </p-dialog>
+
+<p-dialog [(visible)]="payForm" [modal]="true">
+  <form [formGroup]="customerPayForm" (ngSubmit)="pay()">
+    <div class="text-center mb-5">
+      <span class="text-600 font-medium line-height-3"
+        >Enter Phone Number to pay for your Order</span
+      >
+    </div>
+
+    <div>
+      <label for="phoneNumber" class="block text-900 font-medium mb-2"
+        >Phone Number</label
+      >
+      <input
+        type="text"
+        pInputText
+        formControlName="phone"
+        class="w-full mb-3"
+        name="phone"
+        placeholder="Phone number"
+      />
+      <small
+        *ngIf="
+          customerPayForm.get('phone')?.invalid &&
+          (customerPayForm.get('phone')?.dirty ||
+            customerPayForm.get('phone')?.touched)
+        "
+        class="block p-error mb-3"
+      >
+        <div *ngIf="customerPayForm.get('phone')?.errors?.['required']">
+          Phone number is required
+        </div>
+        <div *ngIf="customerPayForm.get('phone')?.errors?.['pattern']">
+          Phone number should be valid
+        </div>
+      </small>
+
+      <button
+        pButton
+        pRipple
+        label="Pay"
+        icon="pi pi-user"
+        class="w-full"
+      ></button>
+    </div>
+  </form>
+</p-dialog>
+
+<p-dialog [(visible)]="providersDialog" [modal]="true" header="MNOs">
+  <div class="text-center mb-5">
+    <span class="text-600 font-medium line-height-3"
+      >Choose a network provider</span
+    >
+  </div>
+  <div class="card flex flex-wrap gap-3 justify-content-center">
+    <img
+      src="https://logodix.com/logo/590174.png"
+      alt="Airtel"
+      class="provider-img"
+      (click)="provider('Airtel')"
+    />
+
+    <img
+      src="https://logodix.com/logo/303474.png"
+      alt="Vodacom"
+      class="provider-img"
+      (click)="provider('Vodacom')"
+    />
+
+    <img
+      src="https://www.pngkey.com/png/detail/405-4057973_halotel-tanzania-has-submitted-its-prospectus-to-the.png"
+      alt="Halotel"
+      class="provider-img"
+      (click)="provider('Halotel')"
+    />
+
+    <img
+      src="https://logodix.com/logo/1762841.png"
+      alt="Tigo"
+      class="provider-img"
+      (click)="provider('Tigo')"
+    />
+  </div>
+</p-dialog>
