@@ -126,9 +126,9 @@
     .gallery {
       column-count: 2;
       width: 100%;
-      .gallery-img img {
-        width: 100px;
-      }
+    }
+    .gallery-img img {
+      width: 100px;
     }
   }
 }
@@ -137,9 +137,9 @@
   .gallery-lightbox-container {
     .gallery {
       column-count: 2;
-      .gallery-img img {
-        max-width: 100%;
-      }
+    }
+    .gallery-img img {
+      max-width: 100%;
     }
   }
 }
@@ -148,9 +148,9 @@
   .gallery-lightbox-container {
     .gallery {
       column-count: 1;
-      .gallery-img img {
-        width: 100%;
-      }
+    }
+    .gallery-img img {
+      width: 100%;
     }
   }
 }

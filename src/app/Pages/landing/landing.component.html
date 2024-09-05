@@ -173,7 +173,12 @@
     <p>
       Total Cost: <span>{{ total | currency : "TZS" }}</span>
     </p>
-    <p-button label="Checkout" icon="pi pi-check" (onClick)="checkout()" />
+    <p-button
+      [disabled]="cartItems == null"
+      label="Checkout"
+      icon="pi pi-check"
+      (click)="checkout()"
+    ></p-button>
   </ng-template>
 </p-dialog>
 

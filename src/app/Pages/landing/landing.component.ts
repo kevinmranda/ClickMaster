@@ -77,7 +77,6 @@ export class LandingComponent implements OnInit {
     });
     this.cartService.getMappedCartItems().subscribe((ids) => {
       this.mappedCartItems = ids;
-      console.log(this.mappedCartItems);
     });
   }
 
