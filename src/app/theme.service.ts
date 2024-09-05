@@ -13,7 +13,7 @@ export class ThemeService {
     ) as HTMLLinkElement;
 
     if (themeLink) {
-      themeLink.href = theme + '.css';
+      themeLink.href = 'src/themes/' + theme + '.css';
     }
   }
 }

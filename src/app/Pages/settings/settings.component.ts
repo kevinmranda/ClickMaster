@@ -14,7 +14,7 @@ import { Router } from '@angular/router';
 export class SettingsComponent implements OnInit {
   receiveNotifications: boolean = false;
   groupedThemes: SelectItemGroup[];
-  selectedTheme: string = 'aura-dark-amber.css';
+  selectedTheme: string = 'src/themes/aura-dark-amber.css';
   languages: SelectItem[];
   selectedLanguage = 'en';
 
@@ -75,7 +75,11 @@ export class SettingsComponent implements OnInit {
       this.themeService.switchTheme(theme);
       this.updatePreferences(undefined, theme, undefined);
     } else {
-      console.error('Invalid theme selected:', theme);
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'Invalid theme selected',
+      });
     }
   }
 
@@ -83,7 +87,11 @@ export class SettingsComponent implements OnInit {
     if (language && typeof language === 'string') {
       this.updatePreferences(undefined, undefined, language);
     } else {
-      console.error('Invalid language selected:', language);
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'Invalid language selected',
+      });
     }
   }
 
