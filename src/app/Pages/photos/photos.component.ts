@@ -4,6 +4,7 @@ import { Photos } from './photos';
 import { MessageService } from 'primeng/api';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { DOCUMENT } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
 @Component({
   selector: 'app-photos',
   templateUrl: './photos.component.html',
@@ -12,7 +13,7 @@ import { DOCUMENT } from '@angular/common';
 export class PhotosComponent implements OnInit {
   photos: Photos[] = [];
   visible: boolean = false;
-  clonedProducts: { [s: string]: Photos } = {};
+  cPhoto: { [s: number]: Photos } = {};
   addPhotosForm: FormGroup;
   userID = localStorage.getItem('id');
 
@@ -40,13 +41,44 @@ export class PhotosComponent implements OnInit {
     });
   }
 
-  onRowEditInit(photos: Photos) {
-    this.clonedProducts[photos.ID as number] = { ...photos };
+  onRowEditInit(photo: Photos) {
+    this.cPhoto[photo.ID] = { ...photo };
+    localStorage.setItem('photo_id', photo.ID.toString());
   }
 
-  onRowEditSave(photos: Photos) {}
+  onRowEditSave(photo: Photos) {
+    if (photo.Price > 0) {
+      delete this.cPhoto[photo.ID];
+      this.photoServices.updatePhoto(photo).subscribe(
+        () => {
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Success',
+            detail: 'Photo is updated',
+          });
+        },
+        (error: HttpErrorResponse) => {
+          console.log(error);
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: error.error.error,
+          });
+        }
+      );
+    } else {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'Invalid Price',
+      });
+    }
+  }
 
-  onRowEditCancel(photos: Photos, index: number) {}
+  onRowEditCancel(photo: Photos, index: number) {
+    this.photos[index] = this.cPhoto[photo.ID];
+    delete this.cPhoto[photo.ID];
+  }
 
   showDialog() {
     this.visible = true;

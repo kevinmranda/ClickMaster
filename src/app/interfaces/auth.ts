@@ -43,6 +43,9 @@ export interface LoginResponse {
     Email: string;
     Mobile: string;
     Role: string;
+    Subscription: string;
+    Theme: string;
+    Language: string;
     Photos: Photos[];
   };
   id: number;

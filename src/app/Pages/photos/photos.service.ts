@@ -11,6 +11,7 @@ import { AuthService } from '../../Services/Auth/auth.service';
 })
 export class PhotosService {
   private baseUrl = 'http://localhost:3000';
+  photoID = localStorage.getItem('photo_id');
   constructor(private http: HttpClient) {}
 
   getPhotos(): Observable<Photos[]> {
@@ -29,5 +30,9 @@ export class PhotosService {
       .pipe(
         map((response) => response.data) // Map to extract the data array
       );
+  }
+
+  updatePhoto(photo: Photos) {
+    return this.http.put(`${this.baseUrl}/updatePhoto/${this.photoID}`, photo);
   }
 }

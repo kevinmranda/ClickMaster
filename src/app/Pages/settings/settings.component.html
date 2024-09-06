@@ -2,18 +2,21 @@
 
 <div class="settings-container">
   <!-- Notification Settings Section -->
-  <p-card header="Notification Settings" class="settings-section">
+  <p-card
+    [header]="'notification_settings' | transloco"
+    class="settings-section"
+  >
     <p-checkbox
       name="notifications"
       [binary]="true"
-      label="Receive notifications through email"
+      [label]="'receive' | transloco"
       [(ngModel)]="receiveNotifications"
       (ngModelChange)="notifications($event)"
     ></p-checkbox>
   </p-card>
 
   <!-- Theme Settings Section -->
-  <p-card header="Theme Settings" class="settings-section">
+  <p-card [header]="'theme_settings' | transloco" class="settings-section">
     <p-dropdown
       [options]="groupedThemes"
       [(ngModel)]="selectedTheme"
@@ -22,20 +25,31 @@
       (onChange)="changeTheme($event.value)"
     >
       <ng-template let-group pTemplate="group">
-        <div class="flex align-items-center">
-          <span>{{ group.label }}</span>
+        <div class="flex align-items-center gap-2">
+          <img
+            *ngIf="group.label == 'Light Themes'"
+            src="https://cdn-icons-png.flaticon.com/128/8637/8637690.png"
+            style="width: 18px"
+          />
+          <img
+            *ngIf="group.label == 'Dark Themes'"
+            src="https://cdn-icons-png.flaticon.com/128/4489/4489231.png"
+            style="width: 18px"
+          />
+          <div>{{ group.label }}</div>
         </div>
       </ng-template>
     </p-dropdown>
   </p-card>
 
   <!-- Language Settings Section -->
-  <p-card header="Language Settings" class="settings-section">
+  <p-card [header]="'language_settings' | transloco" class="settings-section">
     <p-dropdown
       [options]="languages"
       [(ngModel)]="selectedLanguage"
       placeholder="Select a Language"
       (onChange)="changeLanguage($event.value)"
-    ></p-dropdown>
+    >
+    </p-dropdown>
   </p-card>
 </div>

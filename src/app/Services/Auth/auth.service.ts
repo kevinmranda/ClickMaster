@@ -33,6 +33,8 @@ export class AuthService {
             localStorage.setItem('id', response.data.ID.toString());
             localStorage.setItem('role', response.data.Role.toString());
             localStorage.setItem('token', response.token.toString());
+            localStorage.setItem('theme', response.data.Theme.toString());
+            localStorage.setItem('language', response.data.Language.toString());
           }
         })
       );
@@ -98,6 +100,8 @@ export class AuthService {
     localStorage.removeItem('id');
     localStorage.removeItem('role');
     localStorage.removeItem('token');
+    localStorage.removeItem('theme');
+    localStorage.removeItem('language');
     localStorage.clear();
   }
 }

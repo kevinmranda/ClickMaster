@@ -13,7 +13,7 @@ import { ButtonModule } from 'primeng/button';
 import { ToastModule } from 'primeng/toast';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MessageService } from 'primeng/api';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, HttpClientModule } from '@angular/common/http';
 import { ForgetPasswordComponent } from './Pages/Auth/forget-password/forget-password.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
@@ -45,6 +45,7 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { FileUploadComponent } from './components/file-upload/file-upload.component';
 import { DividerModule } from 'primeng/divider';
 import { PhotoCartComponent } from './components/photo-cart/photo-cart.component';
+import { TranslocoRootModule } from './transloco-root.module';
 
 @NgModule({
   declarations: [
@@ -94,6 +95,8 @@ import { PhotoCartComponent } from './components/photo-cart/photo-cart.component
     TagModule,
     DialogModule,
     DividerModule,
+    HttpClientModule,
+    TranslocoRootModule,
   ],
   providers: [MessageService, provideHttpClient()],
   bootstrap: [AppComponent],
