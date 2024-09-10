@@ -21,6 +21,7 @@ import { withHttpTransferCacheOptions } from '@angular/platform-browser';
   styleUrl: './landing.component.css',
 })
 export class LandingComponent implements OnInit {
+  public loading = false;
   customerSignInForm: FormGroup;
   customerJoinForm: FormGroup;
   customerPayForm: FormGroup;
@@ -69,8 +70,10 @@ export class LandingComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (localStorage.getItem('customerEmail') != '') {
+      this.showSign();
+    }
     this.getPhotos();
-    this.showSign();
     this.cartSubscription = this.cartService.cartItems$.subscribe((items) => {
       this.badgeValue = this.cartItems.length;
       this.calculateTotal();
@@ -81,7 +84,9 @@ export class LandingComponent implements OnInit {
   }
 
   getPhotos() {
+    this.loading = true;
     this.photosService.getAllPhotos().subscribe((response) => {
+      this.loading = false;
       this.data = response;
     });
   }
@@ -113,6 +118,7 @@ export class LandingComponent implements OnInit {
   }
 
   checkout() {
+    this.loading = true;
     const order: Order = {
       Customer_email: localStorage.getItem('customerEmail')?.toString() || '',
       Photo_ids: this.mappedCartItems,
@@ -120,6 +126,7 @@ export class LandingComponent implements OnInit {
 
     this.orderService.submitOrder(order).subscribe(
       () => {
+        this.loading = false;
         this.messageService.add({
           severity: 'success',
           summary: 'Success',
@@ -127,6 +134,7 @@ export class LandingComponent implements OnInit {
         });
       },
       (error: HttpErrorResponse) => {
+        this.loading = false;
         console.log(error);
         this.messageService.add({
           severity: 'error',
@@ -148,6 +156,7 @@ export class LandingComponent implements OnInit {
   }
 
   pay() {
+    this.loading = true;
     const orderIDstr = localStorage.getItem('orderID');
     const orderID = orderIDstr ? parseInt(orderIDstr, 10) || 0 : 0;
     const totalStr = localStorage.getItem('total');
@@ -162,6 +171,7 @@ export class LandingComponent implements OnInit {
       };
       this.paymentService.pay(this.paymentInfo).subscribe(
         () => {
+          this.loading = false;
           this.messageService.add({
             severity: 'success',
             summary: 'Success',
@@ -169,6 +179,7 @@ export class LandingComponent implements OnInit {
           });
         },
         (error: HttpErrorResponse) => {
+          this.loading = false;
           console.log(error);
           this.messageService.add({
             severity: 'error',
@@ -182,11 +193,13 @@ export class LandingComponent implements OnInit {
   }
 
   customerSignIn() {
+    this.loading = true;
     const Customer_email = { ...this.customerSignInForm.value };
     this.landingService
       .customerLogin(Customer_email as customerEmail)
       .subscribe(
         (response) => {
+          this.loading = false;
           this.messageService.add({
             severity: 'success',
             summary: 'Success',
@@ -196,6 +209,7 @@ export class LandingComponent implements OnInit {
           this.join = false;
         },
         (error: HttpErrorResponse) => {
+          this.loading = false;
           console.log(error);
           this.messageService.add({
             severity: 'error',
@@ -207,11 +221,13 @@ export class LandingComponent implements OnInit {
   }
 
   customerJoin() {
+    this.loading = true;
     const Customer_join_email = { ...this.customerJoinForm.value };
     this.landingService
       .customerJoin(Customer_join_email as customerEmail)
       .subscribe(
         () => {
+          this.loading = false;
           this.messageService.add({
             severity: 'success',
             summary: 'Success',
@@ -220,6 +236,7 @@ export class LandingComponent implements OnInit {
           this.show = true;
         },
         (error: HttpErrorResponse) => {
+          this.loading = false;
           console.log(error);
           this.messageService.add({
             severity: 'error',

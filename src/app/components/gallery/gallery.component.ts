@@ -59,7 +59,7 @@ export class GalleryComponent implements OnChanges {
   }
 
   getPhotoUrl(text: string) {
-    return `http://localhost:3000/getPhoto/${text}`;
+    return `https://goapi-lppa.onrender.com/getPhoto/${text}`;
   }
 
   ngOnChanges(changes: SimpleChanges): void {

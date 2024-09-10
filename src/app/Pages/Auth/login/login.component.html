@@ -1,3 +1,7 @@
+<ngx-loading
+  [show]="loading"
+  [config]="{ backdropBorderRadius: '3px' }"
+></ngx-loading>
 <div class="flex justify-content-center align-items-center h-full mt-8">
   <form [formGroup]="loginForm" (ngSubmit)="userLogin()">
     <p-card header="Login" [style]="{ width: '390px' }">

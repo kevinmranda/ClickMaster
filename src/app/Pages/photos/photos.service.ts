@@ -10,7 +10,7 @@ import { AuthService } from '../../Services/Auth/auth.service';
   providedIn: 'root',
 })
 export class PhotosService {
-  private baseUrl = 'http://localhost:3000';
+  private baseUrl = 'https://goapi-lppa.onrender.com';
   photoID = localStorage.getItem('photo_id');
   constructor(private http: HttpClient) {}
 

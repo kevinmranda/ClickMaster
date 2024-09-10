@@ -46,6 +46,7 @@ import { FileUploadComponent } from './components/file-upload/file-upload.compon
 import { DividerModule } from 'primeng/divider';
 import { PhotoCartComponent } from './components/photo-cart/photo-cart.component';
 import { TranslocoRootModule } from './transloco-root.module';
+import { NgxLoadingModule } from 'ngx-loading';
 
 @NgModule({
   declarations: [
@@ -97,6 +98,7 @@ import { TranslocoRootModule } from './transloco-root.module';
     DividerModule,
     HttpClientModule,
     TranslocoRootModule,
+    NgxLoadingModule.forRoot({}),
   ],
   providers: [MessageService, provideHttpClient()],
   bootstrap: [AppComponent],

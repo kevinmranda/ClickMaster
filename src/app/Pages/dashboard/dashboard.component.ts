@@ -10,6 +10,7 @@ import { Payments } from '../../interfaces/payments';
   styleUrl: './dashboard.component.css',
 })
 export class DashboardComponent {
+  loading = false;
   photos?: number;
   completedOrders?: number;
   pendingOrders?: number;
@@ -22,9 +23,11 @@ export class DashboardComponent {
   ) {}
 
   ngOnInit(): void {
+    this.loading = true;
     this.getPhotosCount();
     this.getOrdersCount();
     this.incomeCalc();
+    this.loading = false;
   }
 
   getPhotosCount() {

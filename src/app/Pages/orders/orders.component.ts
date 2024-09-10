@@ -8,6 +8,7 @@ import { OrdersService } from '../../Services/Pages/Orders/orders.service';
   styleUrl: './orders.component.css',
 })
 export class OrdersComponent {
+  loading = false;
   orders: Orders[] = [];
   constructor(private OrdersService: OrdersService) {}
 
@@ -16,7 +17,9 @@ export class OrdersComponent {
   }
 
   getOrdersList() {
+    this.loading = true;
     this.OrdersService.getOrders().subscribe((response) => {
+      this.loading = false;
       this.orders = response;
     });
   }

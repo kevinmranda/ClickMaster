@@ -13,6 +13,7 @@ import { TranslocoService } from '@jsverse/transloco';
   styleUrls: ['./settings.component.css'],
 })
 export class SettingsComponent implements OnInit {
+  loading = false;
   receiveNotifications: boolean = false;
   groupedThemes: SelectItemGroup[];
   selectedTheme: string = 'bootstrap4-light-purple';
@@ -95,11 +96,7 @@ export class SettingsComponent implements OnInit {
     ];
   }
 
-  ngOnInit() {
-    // Fetch the current preferences from local storage and handle null
-    const storedTheme = localStorage.getItem('theme');
-    this.selectedTheme = storedTheme ? storedTheme : 'bootstrap4-light-purple';
-  }
+  ngOnInit() {}
 
   notifications(newValue: boolean) {
     this.receiveNotifications = newValue;
@@ -135,6 +132,7 @@ export class SettingsComponent implements OnInit {
   }
 
   updatePreferences(subscription?: boolean, theme?: string, language?: string) {
+    this.loading = true;
     // Start with the current preferences
     const preferences: UserPreferences = {
       Subscription: this.receiveNotifications,
@@ -155,6 +153,7 @@ export class SettingsComponent implements OnInit {
 
     this.authService.updateUserPreferences(preferences).subscribe(
       (response) => {
+        this.loading = false;
         console.log(response);
         this.messageService.add({
           severity: 'success',
@@ -163,6 +162,7 @@ export class SettingsComponent implements OnInit {
         });
       },
       (error: HttpErrorResponse) => {
+        this.loading = false;
         console.log(error);
         this.messageService.add({
           severity: 'error',

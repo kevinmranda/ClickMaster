@@ -12,6 +12,7 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrl: './login.component.css',
 })
 export class LoginComponent {
+  public loading = false;
   loginForm: FormGroup;
 
   constructor(
@@ -34,9 +35,11 @@ export class LoginComponent {
   }
 
   userLogin() {
+    this.loading = true;
     const postData = { ...this.loginForm.value };
     this.authService.userLogin(postData as UserLogin).subscribe(
       (response) => {
+        this.loading = false;
         this.messageService.add({
           severity: 'success',
           summary: 'Success',
@@ -45,6 +48,7 @@ export class LoginComponent {
         this.router.navigate(['dashboard']);
       },
       (error: HttpErrorResponse) => {
+        this.loading = false;
         console.log(error);
         this.messageService.add({
           severity: 'error',

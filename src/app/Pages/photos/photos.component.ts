@@ -11,6 +11,7 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrl: './photos.component.css',
 })
 export class PhotosComponent implements OnInit {
+  loading = false;
   photos: Photos[] = [];
   visible: boolean = false;
   cPhoto: { [s: number]: Photos } = {};
@@ -36,7 +37,9 @@ export class PhotosComponent implements OnInit {
   }
 
   getPhotosList() {
+    this.loading = true;
     this.photoServices.getPhotos().subscribe((response) => {
+      this.loading = false;
       this.photos = response;
     });
   }
@@ -47,10 +50,12 @@ export class PhotosComponent implements OnInit {
   }
 
   onRowEditSave(photo: Photos) {
+    this.loading = true;
     if (photo.Price > 0) {
       delete this.cPhoto[photo.ID];
       this.photoServices.updatePhoto(photo).subscribe(
         () => {
+          this.loading = false;
           this.messageService.add({
             severity: 'success',
             summary: 'Success',
@@ -58,6 +63,7 @@ export class PhotosComponent implements OnInit {
           });
         },
         (error: HttpErrorResponse) => {
+          this.loading = false;
           console.log(error);
           this.messageService.add({
             severity: 'error',

@@ -13,6 +13,7 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrls: ['./reset-password.component.css'], // Fixed styleUrls typo
 })
 export class ResetPasswordComponent implements OnInit {
+  loading = false;
   resetPasswordForm: FormGroup;
   token: string | null = null;
 
@@ -46,6 +47,7 @@ export class ResetPasswordComponent implements OnInit {
   }
 
   onSubmit() {
+    this.loading = true;
     if (this.resetPasswordForm.valid && this.token) {
       const newPassword = this.password.value;
 
@@ -56,6 +58,7 @@ export class ResetPasswordComponent implements OnInit {
       // Send the token along with the new password to the backend
       this.authService.resetPassword(this.token, updatedPassword).subscribe(
         (response) => {
+          this.loading = false;
           console.log(response);
           this.messageService.add({
             severity: 'success',
@@ -65,6 +68,7 @@ export class ResetPasswordComponent implements OnInit {
           this.router.navigate(['login']);
         },
         (error: HttpErrorResponse) => {
+          this.loading = false;
           console.log(error);
           this.messageService.add({
             severity: 'error',

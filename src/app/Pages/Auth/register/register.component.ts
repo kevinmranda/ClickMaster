@@ -13,6 +13,7 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrl: './register.component.css',
 })
 export class RegisterComponent {
+  loading = false;
   registerForm: FormGroup;
 
   constructor(
@@ -46,10 +47,12 @@ export class RegisterComponent {
   }
 
   submitDetails() {
+    this.loading = true;
     const postData = { ...this.registerForm.value };
     delete postData.confirmPassword;
     this.authService.registerUser(postData as User).subscribe(
       (response) => {
+        this.loading = false;
         this.messageService.add({
           severity: 'success',
           summary: 'Success',
@@ -58,6 +61,7 @@ export class RegisterComponent {
         this.router.navigate(['login']);
       },
       (error: HttpErrorResponse) => {
+        this.loading = false;
         console.log(error);
         this.messageService.add({
           severity: 'error',

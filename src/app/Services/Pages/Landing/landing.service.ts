@@ -7,7 +7,7 @@ import { Observable, tap } from 'rxjs';
   providedIn: 'root',
 })
 export class LandingService {
-  private baseUrl = 'http://localhost:3000';
+  private baseUrl = 'https://goapi-lppa.onrender.com';
   constructor(private http: HttpClient) {}
 
   customerJoin(customerEmail: customerEmail): Observable<any> {

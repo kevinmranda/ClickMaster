@@ -8,6 +8,7 @@ import { PaymentsService } from '../../Services/Pages/Payments/payments.service'
   styleUrl: './payments.component.css',
 })
 export class PaymentsComponent {
+  loading = false;
   payments: Payments[] = [];
   constructor(private paymentsServices: PaymentsService) {}
 
@@ -16,7 +17,9 @@ export class PaymentsComponent {
   }
 
   getPaymentsList() {
+    this.loading = true;
     this.paymentsServices.getPayments().subscribe((response) => {
+      this.loading = false;
       this.payments = response;
     });
   }

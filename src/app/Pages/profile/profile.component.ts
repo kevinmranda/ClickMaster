@@ -12,6 +12,7 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrls: ['./profile.component.css'],
 })
 export class ProfileComponent implements OnInit {
+  loading = false;
   editUserForm: FormGroup;
 
   constructor(
@@ -35,8 +36,10 @@ export class ProfileComponent implements OnInit {
   }
 
   loadUserDetails() {
+    this.loading = true;
     this.authService.getUser().subscribe(
       (response: any) => {
+        this.loading = false;
         const user: User = response.data;
         // Ensure user data is present
         if (user) {
@@ -51,6 +54,7 @@ export class ProfileComponent implements OnInit {
         }
       },
       (error) => {
+        this.loading = false;
         this.messageService.add({
           severity: 'error',
           summary: 'Error',
@@ -65,10 +69,12 @@ export class ProfileComponent implements OnInit {
   }
 
   onSubmit() {
+    this.loading = true;
     if (this.editUserForm.valid) {
       const updatedData = { ...this.editUserForm.value };
       this.authService.updateUser(updatedData as User).subscribe(
         (response) => {
+          this.loading = false;
           this.messageService.add({
             severity: 'success',
             summary: 'Success',
@@ -76,6 +82,7 @@ export class ProfileComponent implements OnInit {
           });
         },
         (error: HttpErrorResponse) => {
+          this.loading = false;
           console.log(error);
           this.messageService.add({
             severity: 'error',

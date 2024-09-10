@@ -1,5 +1,8 @@
 <app-scafold></app-scafold>
-
+<ngx-loading
+  [show]="loading"
+  [config]="{ backdropBorderRadius: '3px' }"
+></ngx-loading>
 <p-toast></p-toast>
 <p-table
   [value]="photos"
@@ -83,7 +86,9 @@
           <ng-template pTemplate="output">
             <img
               style="width: 100px; height: 100px; object-fit: cover"
-              src="http://localhost:3000/getPhoto/{{ photo.Filename }}"
+              src="https://goapi-lppa.onrender.com/getPhoto/{{
+                photo.Filename
+              }}"
               alt="{{ photo.Title }}"
             />
           </ng-template>

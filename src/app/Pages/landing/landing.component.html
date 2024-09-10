@@ -1,3 +1,7 @@
+<ngx-loading
+  [show]="loading"
+  [config]="{ backdropBorderRadius: '3px' }"
+></ngx-loading>
 <p-menubar>
   <ng-template pTemplate="start">
     <span class="m-4">ClickMaster</span>
@@ -138,7 +142,9 @@
                   <img
                     class="border-round"
                     style="width: 70px; height: 70px; object-fit: cover"
-                    src="http://localhost:3000/getPhoto/{{ cartItem.Filename }}"
+                    src="https://goapi-lppa.onrender.com/getPhoto/{{
+                      cartItem.Filename
+                    }}"
                     alt="{{ cartItem.Title }}"
                   />
                 </div>
@@ -247,14 +253,14 @@
       src="https://logodix.com/logo/303474.png"
       alt="Vodacom"
       class="provider-img"
-      (click)="provider('Vodacom')"
+      (click)="provider('Mpesa')"
     />
 
     <img
-      src="https://www.pngkey.com/png/detail/405-4057973_halotel-tanzania-has-submitted-its-prospectus-to-the.png"
+      src="https://pg-vnext-banners.s3.eu-central-1.amazonaws.com/vnext-images/pgvnext-payment-images/halopesa.svg"
       alt="Halotel"
       class="provider-img"
-      (click)="provider('Halotel')"
+      (click)="provider('Halopesa')"
     />
 
     <img

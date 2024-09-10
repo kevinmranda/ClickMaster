@@ -13,6 +13,7 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrl: './update-password.component.css',
 })
 export class UpdatePasswordComponent {
+  loading = false;
   updatePasswordForm: FormGroup;
 
   constructor(
@@ -44,6 +45,7 @@ export class UpdatePasswordComponent {
   }
 
   OnSubmit() {
+    this.loading = true;
     // const pwd = this.password.value;
     if (this.updatePasswordForm.valid) {
       const oldPassword = this.oldPassword.value;
@@ -55,6 +57,7 @@ export class UpdatePasswordComponent {
       };
       this.authService.updateUserPassword(updatedPassword).subscribe(
         (response) => {
+          this.loading = false;
           console.log(response);
           this.messageService.add({
             severity: 'success',
@@ -64,6 +67,7 @@ export class UpdatePasswordComponent {
           this.router.navigate(['login']);
         },
         (error: HttpErrorResponse) => {
+          this.loading = false;
           console.log(error);
           this.messageService.add({
             severity: 'error',

@@ -10,6 +10,7 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrl: './forget-password.component.css',
 })
 export class ForgetPasswordComponent {
+  loading = false;
   email?: string;
 
   constructor(
@@ -17,10 +18,12 @@ export class ForgetPasswordComponent {
     private messageService: MessageService
   ) {}
   sendEmail() {
+    this.loading = true;
     if (this.email) {
       const emailPayload = { Email: this.email };
       this.AuthService.sendResetPasswordEmail(emailPayload).subscribe(
         (response) => {
+          this.loading = false;
           console.log(response);
           this.messageService.add({
             severity: 'success',
@@ -29,6 +32,7 @@ export class ForgetPasswordComponent {
           });
         },
         (error: HttpErrorResponse) => {
+          this.loading = false;
           console.log(error);
           this.messageService.add({
             severity: 'error',

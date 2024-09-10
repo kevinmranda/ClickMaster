@@ -8,6 +8,7 @@ import { LogsService } from '../../Services/Pages/Logs/logs.service';
   styleUrl: './activity-logging.component.css',
 })
 export class ActivityLoggingComponent {
+  loading = false;
   logs: Logs[] = [];
   constructor(private logService: LogsService) {}
 
@@ -16,7 +17,9 @@ export class ActivityLoggingComponent {
   }
 
   getLogs() {
+    this.loading = true;
     this.logService.getLogs().subscribe((response) => {
+      this.loading = false;
       this.logs = response;
     });
   }
