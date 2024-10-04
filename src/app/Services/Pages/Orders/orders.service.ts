@@ -8,7 +8,7 @@ import { CartService } from '../Landing/cart.service';
   providedIn: 'root',
 })
 export class OrdersService {
-  private baseUrl = 'https://goapi-lppa.onrender.com';
+  private baseUrl = 'http://localhost:3000';
 
   constructor(private http: HttpClient, private cartService: CartService) {}
 

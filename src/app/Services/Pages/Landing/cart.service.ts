@@ -20,7 +20,7 @@ export class CartService {
     );
     this.cartItems.next(currentCart);
   }
-
+  // clear the cart
   clearCart() {
     this.cartItems.next([]);
   }

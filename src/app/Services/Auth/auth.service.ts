@@ -16,7 +16,7 @@ import { LoginResponse } from '../../interfaces/auth';
   providedIn: 'root',
 })
 export class AuthService {
-  private baseUrl = 'https://goapi-lppa.onrender.com';
+  private baseUrl = 'http://localhost:3000';
 
   constructor(private http: HttpClient) {}
 

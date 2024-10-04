@@ -14,7 +14,7 @@ import { OrdersService } from '../../Services/Pages/Orders/orders.service';
 import { PaymentsService } from '../../Services/Pages/Payments/payments.service';
 import { Payment } from '../../interfaces/payments';
 import { withHttpTransferCacheOptions } from '@angular/platform-browser';
-
+import { CheckboxStateService } from '../../Services/Checkbox/checkbox-service.service';
 @Component({
   selector: 'app-landing',
   templateUrl: './landing.component.html',
@@ -38,6 +38,7 @@ export class LandingComponent implements OnInit {
   paymentInfo!: Payment;
   providersDialog = false;
   MNOProvider!: string;
+  checked: any;
 
   constructor(
     private photosService: PhotosService,
@@ -46,7 +47,8 @@ export class LandingComponent implements OnInit {
     private messageService: MessageService,
     private cartService: CartService,
     private orderService: OrdersService,
-    private paymentService: PaymentsService
+    private paymentService: PaymentsService,
+    private checkboxService: CheckboxStateService
   ) {
     this.customerSignInForm = this.fb.group({
       customer_email: ['', [Validators.required, Validators.email]],
@@ -70,9 +72,6 @@ export class LandingComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (localStorage.getItem('customerEmail') != '') {
-      this.showSign();
-    }
     this.getPhotos();
     this.cartSubscription = this.cartService.cartItems$.subscribe((items) => {
       this.badgeValue = this.cartItems.length;
@@ -147,6 +146,8 @@ export class LandingComponent implements OnInit {
     this.cartService.clearCart();
     this.preview = false;
     this.providersDialog = true;
+    this.checkboxService.resetCheckboxState();
+    localStorage.removeItem('customerEmail');
   }
 
   provider(provider: string) {
@@ -190,6 +191,8 @@ export class LandingComponent implements OnInit {
       );
       this.payForm = false;
     }
+    localStorage.removeItem('orderID');
+    localStorage.removeItem('total');
   }
 
   customerSignIn() {

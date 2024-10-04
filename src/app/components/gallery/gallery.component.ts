@@ -8,6 +8,7 @@ import {
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { Photos } from '../../Pages/photos/photos';
 import { CartService } from '../../Services/Pages/Landing/cart.service';
+import { CheckboxStateService } from '../../Services/Checkbox/checkbox-service.service';
 
 @Component({
   selector: 'app-gallery',
@@ -44,14 +45,25 @@ export class GalleryComponent implements OnChanges {
   totalImageCount = 0;
   checked: boolean = false;
 
-  constructor(private cartService: CartService) {}
+  constructor(
+    private cartService: CartService,
+    private checkboxService: CheckboxStateService
+  ) {}
 
   addToCart(photo: any) {
     this.cartService.addToCart(photo);
   }
 
+  ngOnInit() {
+    // Listen for changes to reset checkbox
+    this.checkboxService.currentCheckboxState.subscribe((state: boolean) => {
+      this.checked = state;
+    });
+  }
+
   onCheckboxChange(event: any, photo: any) {
     if (event.target.checked) {
+      this.checkboxService.updateCheckboxState(this.checked);
       this.addToCart(photo);
     } else {
       this.cartService.removeFromCart(photo.ID);
@@ -59,7 +71,7 @@ export class GalleryComponent implements OnChanges {
   }
 
   getPhotoUrl(text: string) {
-    return `https://goapi-lppa.onrender.com/getPhoto/${text}`;
+    return `http://localhost:3000/getPhoto/${text}`;
   }
 
   ngOnChanges(changes: SimpleChanges): void {

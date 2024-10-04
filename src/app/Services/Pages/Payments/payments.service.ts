@@ -7,7 +7,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root',
 })
 export class PaymentsService {
-  private baseUrl = 'https://goapi-lppa.onrender.com';
+  private baseUrl = 'http://localhost:3000';
 
   constructor(private http: HttpClient) {}
 

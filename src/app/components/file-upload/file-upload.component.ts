@@ -73,56 +73,53 @@ export class FileUploadComponent {
           formData.append('file', file, file.name);
 
           // Upload the file to the server
-          this.http
-            .post('https://goapi-lppa.onrender.com/upload/', formData)
-            .subscribe(
-              (uploadResponse: any) => {
-                // On successful upload, prepare file details
-                const fileDetails = {
-                  title: file.name.split('.').slice(0, -1).join('.'),
-                  description: `${width}x${height}`, // USING the image dimensions
-                  filename: `${file.name}`,
-                  price: 25000,
-                };
+          this.http.post('http://localhost:3000/upload/', formData).subscribe(
+            (uploadResponse: any) => {
+              // On successful upload, prepare file details
+              const fileDetails = {
+                title: file.name.split('.').slice(0, -1).join('.'),
+                description: `${width}x${height}`, // USING the image dimensions
+                filename: `${file.name}`,
+                price: 25000,
+              };
 
-                // Save file details to the database
-                this.http
-                  .post(
-                    'https://goapi-lppa.onrender.com/insertPhoto/' +
-                      this.userID,
-                    fileDetails
-                  )
-                  .subscribe(
-                    (response) => {
-                      this.loading = false;
-                      this.messageService.add({
-                        severity: 'success',
-                        summary: 'Success',
-                        detail: 'Photo uploaded successfully',
-                        life: 3000,
-                      });
-                    },
-                    (error) => {
-                      this.loading = false;
-                      this.messageService.add({
-                        severity: 'error',
-                        summary: 'Error',
-                        detail: 'Failed to save file details',
-                        life: 3000,
-                      });
-                    }
-                  );
-              },
-              (error) => {
-                this.loading = false;
-                this.messageService.add({
-                  severity: 'error',
-                  summary: 'Error',
-                  detail: 'File upload failed',
-                  life: 3000,
-                });
-              }
-            );
+              // Save file details to the database
+              this.http
+                .post(
+                  'http://localhost:3000/insertPhoto/' + this.userID,
+                  fileDetails
+                )
+                .subscribe(
+                  (response) => {
+                    this.loading = false;
+                    this.messageService.add({
+                      severity: 'success',
+                      summary: 'Success',
+                      detail: 'Photo uploaded successfully',
+                      life: 3000,
+                    });
+                  },
+                  (error) => {
+                    this.loading = false;
+                    this.messageService.add({
+                      severity: 'error',
+                      summary: 'Error',
+                      detail: 'Failed to save file details',
+                      life: 3000,
+                    });
+                  }
+                );
+            },
+            (error) => {
+              this.loading = false;
+              this.messageService.add({
+                severity: 'error',
+                summary: 'Error',
+                detail: 'File upload failed',
+                life: 3000,
+              });
+            }
+          );
         };
       };
 

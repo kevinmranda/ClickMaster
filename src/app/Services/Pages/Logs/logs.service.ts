@@ -7,7 +7,7 @@ import { map, Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class LogsService {
-  private baseUrl = 'https://goapi-lppa.onrender.com';
+  private baseUrl = 'http://localhost:3000';
 
   constructor(private http: HttpClient) {}
 
